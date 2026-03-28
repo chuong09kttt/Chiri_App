@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+</head>
+<body>
+
+<h2>Xin chào người dùng</h2>
+
+<button onclick="downloadApp()">Tải phần mềm</button>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js";
+
+const app = initializeApp({
+  apiKey: "YOUR_KEY",
+  authDomain: "YOUR_DOMAIN",
+  projectId: "YOUR_ID",
+  storageBucket: "YOUR_BUCKET"
+});
+
+const auth = getAuth();
+const db = getFirestore();
+const storage = getStorage();
+
+async function checkPaid(uid){
+  const d = await getDoc(doc(db, "users", uid));
+  return d.data().isPaid;
+}
+
+window.downloadApp = async function(){
+  const user = auth.currentUser;
+
+  if(!user){
+    alert("Đăng nhập lại");
+    return;
+  }
+
+  const paid = await checkPaid(user.uid);
+
+  if(!paid){
+    alert("Bạn chưa thanh toán");
+    return;
+  }
+
+  const url = await getDownloadURL(ref(storage, 'software/app_v1.exe'));
+  window.location.href = url;
+}
+</script>
+
+</body>
+</html>
