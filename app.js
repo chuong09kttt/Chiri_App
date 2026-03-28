@@ -1,8 +1,13 @@
 // 🔥 CONFIG FIREBASE (dán của bạn vào)
 const firebaseConfig = {
-  apiKey: "YOUR_KEY",
-  authDomain: "YOUR_DOMAIN",
-};
+  apiKey: "AIzaSyCE_IpkrkIGfPf6zN6TEvmONU-S-pLHxh8",
+  authDomain: "chiriapp-49cd9.firebaseapp.com",
+  projectId: "chiriapp-49cd9",
+  storageBucket: "chiriapp-49cd9.firebasestorage.app",
+  messagingSenderId: "14767651614",
+  appId: "1:14767651614:web:f39709a473bdf998b0e70f",
+  measurementId: "G-M17QFMHMZH"
+};;
 
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
